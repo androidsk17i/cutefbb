@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageFX Prompt Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .copy-btn {
+            background-color: #007bff;
+            margin-top: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ImageFX Prompt Generator</h1>
+        <p>Enter your base prompt to generate an enhanced version for Japanese female bodybuilder photos.</p>
+        
+        <textarea id="inputPrompt" placeholder="Enter your base prompt here...">Beautiful japanese chubby muscular female bodybuilder</textarea>
+        <div class="button-group">
+            <button onclick="generatePrompt()">Generate Enhanced Prompt</button>
+            <button onclick="generateRandomCount()">Random Combinations</button>
+        </div>
+        
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const styleElements = [
+            "professional photography",
+            "studio lighting",
+            "4K UHD",
+            "high detail",
+            "photorealistic",
+            "cinematic",
+            "dramatic lighting",
+            "award-winning photography",
+            "magazine quality",
+            "commercial photography",
+            "fashion photography style",
+            "editorial style",
+            "high-end retouching",
+            "professional color grading",
+            "8K resolution",
+            "RAW photo",
+            "HDR",
+            "high contrast",
+            "professional composition",
+            "perfect exposure",
+            "commercial advertising style",
+            "premium quality",
+            "ultra-realistic",
+            "professional camera",
+            "high-end production",
+            "natural color balance",
+            "crystal clear focus",
+            "professional post-processing",
+            "magazine editorial quality",
+            "luxury photography"
+        ];
+
+        const bodyFeatures = [
+            "tall stature",
+            "plus size figure",
+            "curvy build",
+            "statuesque frame",
+            "voluptuous form",
+            "full figure",
+            "tall and curvy",
+            "towering height",
+            "soft curves",
+            "generous proportions",
+            "tall and elegant",
+            "commanding presence",
+            "substantial build",
+            "tall silhouette",
+            "curvaceous figure",
+            "full-bodied form",
+            "tall and graceful",
+            "imposing height",
+            "plump figure",
+            "tall and dignified",
+            "robust curves",
+            "substantial frame",
+            "tall and striking",
+            "full-figured beauty",
+            "majestic presence",
+            "tall and magnificent",
+            "shapely figure",
+            "statuesque beauty",
+            "grand presence",
+            "queenly stature"
+        ];
+
+        const photographyDetails = [
+            "soft natural lighting",
+            "professional studio setup",
+            "clean background",
+            "sharp focus",
+            "bokeh effect",
+            "professional color grading",
+            "rim lighting",
+            "backlit",
+            "studio flash",
+            "diffused lighting",
+            "dramatic shadows",
+            "high key lighting",
+            "low key lighting",
+            "golden hour lighting",
+            "neutral background",
+            "gradient background",
+            "studio backdrop",
+            "depth of field",
+            "motion blur effect",
+            "perfect composition",
+            "rule of thirds",
+            "symmetrical composition",
+            "minimalist background",
+            "textured background",
+            "professional staging",
+            "natural ambiance",
+            "soft focus background",
+            "environmental lighting",
+            "mood lighting",
+            "atmospheric setting"
+        ];
+
+        const poses = [
+            "casual standing pose",
+            "sitting relaxed",
+            "walking pose",
+            "natural smile",
+            "candid pose",
+            "leaning against wall",
+            "sitting on chair",
+            "looking away pose",
+            "gentle smile",
+            "reading pose",
+            "drinking coffee",
+            "casual conversation pose",
+            "looking at phone",
+            "crossing street",
+            "window shopping",
+            "sitting at cafe",
+            "browsing books",
+            "walking with bag",
+            "waiting for bus",
+            "casual stride",
+            "checking watch",
+            "hands in pockets",
+            "natural laugh",
+            "contemplative look",
+            "casual interaction",
+            "writing in notebook",
+            "enjoying scenery",
+            "casual chat",
+            "browsing phone",
+            "relaxed standing"
+        ];
+
+        const clothingOptions = [
+            "casual jeans",
+            "white t-shirt",
+            "summer dress",
+            "denim jacket",
+            "cardigan sweater",
+            "blouse",
+            "midi skirt",
+            "leather jacket",
+            "sundress",
+            "button-up shirt",
+            "maxi dress",
+            "sweater",
+            "blazer",
+            "casual shorts",
+            "long sleeve shirt",
+            "turtleneck",
+            "hoodie",
+            "pullover sweater",
+            "casual pants",
+            "polo shirt",
+            "knit dress",
+            "casual jacket",
+            "v-neck shirt",
+            "casual suit",
+            "summer top",
+            "wrap dress",
+            "flowing skirt",
+            "casual blouse",
+            "cotton dress",
+            "comfortable outfit"
+        ];
+
+        const scenes = [
+            "city street",
+            "cozy cafe interior",
+            "modern office",
+            "urban park",
+            "shopping district",
+            "subway station",
+            "bookstore interior",
+            "residential neighborhood",
+            "beach sunset",
+            "garden setting",
+            "downtown sidewalk",
+            "vintage restaurant",
+            "art gallery",
+            "library interior",
+            "rooftop terrace",
+            "train station platform",
+            "flower shop",
+            "outdoor market",
+            "historic building",
+            "modern apartment",
+            "boutique store",
+            "coffee shop patio",
+            "city skyline background",
+            "quiet park bench",
+            "charming street corner",
+            "botanical garden",
+            "riverside walk",
+            "museum interior",
+            "cozy home setting",
+            "scenic overlook"
+        ];
+
+        function getRandomElements(array, count) {
+            const shuffled = array.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateRandomCount() {
+            const styleCount = getRandomNumber(2, 4);
+            const featureCount = getRandomNumber(2, 4);
+            const photoCount = getRandomNumber(2, 3);
+            const poseCount = getRandomNumber(1, 2);
+            const clothingCount = getRandomNumber(1, 2);
+            const sceneCount = getRandomNumber(1, 2);
+            
+            generatePrompt(styleCount, featureCount, photoCount, poseCount, clothingCount, sceneCount);
+        }
+
+        function generatePrompt(styleCount = 3, featureCount = 3, photoCount = 2, poseCount = 1, clothingCount = 1, sceneCount = 1) {
+            const basePrompt = document.getElementById('inputPrompt').value.trim();
+            
+            const selectedStyle = getRandomElements(styleElements, styleCount);
+            const selectedFeatures = getRandomElements(bodyFeatures, featureCount);
+            const selectedPhoto = getRandomElements(photographyDetails, photoCount);
+            const selectedPose = getRandomElements(poses, poseCount);
+            const selectedClothing = getRandomElements(clothingOptions, clothingCount);
+            const selectedScene = getRandomElements(scenes, sceneCount);
+
+            const enhancedPrompt = `${basePrompt}, in ${selectedScene.join(', ')}, wearing ${selectedClothing.join(', ')}, ${selectedPose.join(', ')}, ${selectedFeatures.join(', ')}, ${selectedPhoto.join(', ')}, ${selectedStyle.join(', ')}, masterpiece, best quality, highly detailed`;
+
+            document.getElementById('output').innerText = enhancedPrompt;
+            
+            copyToClipboard(enhancedPrompt);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    const notification = document.createElement('div');
+                    notification.textContent = 'Prompt copied to clipboard!';
+                    notification.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 15px;
+                        border-radius: 5px;
+                        animation: fadeOut 2s forwards;
+                        z-index: 1000;
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 2000);
+                })
+                .catch(err => console.error('Failed to copy text: ', err));
+        }
+
+        // Generate a prompt on page load
+        window.onload = generatePrompt;
+    </script>
+</body>
+</html> 
